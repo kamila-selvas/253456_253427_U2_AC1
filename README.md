@@ -14,11 +14,6 @@ Este proyecto implementa una solución en **Java** para la administración de pr
 
 ```mermaid
 classDiagram
-    class Comparable~Producto~ {
-        <<interface>>
-        +compareTo(otro: Producto) int
-    }
-
     class Producto {
         -nombre: String
         -precio: double
@@ -46,10 +41,9 @@ classDiagram
         +visualizarListaProductos() void
         +buscarProducto() void
         +visualizarMenu() void
-        +main(args: String[]) void
+        +main(args: String[])$ void
     }
 
-    Comparable~Producto~ <|.. Producto : implementa
     Almacen o-- Producto : gestiona listaProductos
     Almacen --> Producto : objetoProducto
     Almacen ..> BusquedaBinaria : usa
