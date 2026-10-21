@@ -6,7 +6,7 @@
 ---
 
 ## 📋 Descripción del Proyecto
-Este proyecto implementa una solución en **Java** para la administración de productos en un almacén. Hace uso de una estructura lineal dinámica (`LinkedList<Producto>`), aplica ordenamiento natural por precio mediante la interfaz `Comparable<Producto>`, y modulariza el algoritmo de **Búsqueda Binaria** en una clase independiente y recursiva (`BusquedaBinaria`).
+Este proyecto implementa una solución en **Java** para la administración de productos en un almacén. Hace uso de una estructura lineal dinámica (`LinkedList<Producto>`), aplica ordenamiento natural por precio mediante la interfaz `Comparable<Producto>`, y modulariza tanto el algoritmo de **Búsqueda Binaria** (`BusquedaBinaria`) como el punto de inicio de la aplicación (`Main`) en clases independientes.
 
 ---
 
@@ -41,12 +41,16 @@ classDiagram
         +visualizarListaProductos() void
         +buscarProducto() void
         +visualizarMenu() void
+    }
+
+    class Main {
         +main(args: String[])$ void
     }
 
     Almacen o-- Producto : gestiona listaProductos
     Almacen --> Producto : objetoProducto
     Almacen ..> BusquedaBinaria : usa
+    Main ..> Almacen : inicia
 ```
 
 ---
@@ -67,7 +71,7 @@ classDiagram
    ```
 3. Ejecutar la aplicación:
    ```bash
-   java Almacen
+   java Main
    ```
 
 ---

@@ -127,10 +127,4 @@ public class Almacen {
             }
         } while (opcion != 5);
     }
-
-    // Método principal para ejecutar el programa
-    public static void main(String[] args) {
-        Almacen almacen = new Almacen();
-        almacen.visualizarMenu();
-    }
 }
