@@ -4,11 +4,11 @@ import java.util.Scanner;
 
 /**
  * Clase Almacen que gestiona una colección de productos mediante LinkedList,
- * implementando métodos de ordenamiento y búsqueda binaria.
+ * delegando la búsqueda al módulo BusquedaBinaria y utilizando Comparable para ordenamiento.
  */
 public class Almacen {
 
-    // Atributos según el diagrama de clases
+    // Atributos del diagrama de clases
     private LinkedList<Producto> listaProductos;
     private Producto objetoProducto;
     private Scanner entrada;
@@ -59,21 +59,22 @@ public class Almacen {
         visualizarListaProductos();
     }
 
-    // 4. Método interactivo para buscar un producto por precio mediante búsqueda binaria
+    // 4. Método para buscar un producto por precio mediante la clase BusquedaBinaria
     public void buscarProducto() {
         if (listaProductos.isEmpty()) {
             System.out.println("\nNo hay productos en el almacén.");
             return;
         }
 
-        // Aseguramos que la lista esté ordenada (condición requerida para búsqueda binaria)
+        // Condición para la búsqueda binaria: la lista debe estar ordenada
         Collections.sort(listaProductos);
 
         System.out.println("\n--- BÚSQUEDA BINARIA POR PRECIO ---");
         System.out.print("Ingrese el precio a buscar: ");
         double precioBuscado = Double.parseDouble(entrada.nextLine());
 
-        int posicion = busquedaBinaria(precioBuscado, 0, listaProductos.size() - 1);
+        // Se delega la búsqueda a la clase especializada BusquedaBinaria
+        int posicion = BusquedaBinaria.buscar(listaProductos, precioBuscado, 0, listaProductos.size() - 1);
 
         if (posicion != -1) {
             Producto encontrado = listaProductos.get(posicion);
@@ -81,24 +82,6 @@ public class Almacen {
             System.out.println("   " + encontrado);
         } else {
             System.out.println("-> No se encontró ningún producto con el precio $" + precioBuscado);
-        }
-    }
-
-    // Método recursivo de Búsqueda Binaria
-    public int busquedaBinaria(double precioBuscado, int inicio, int fin) {
-        if (inicio > fin) {
-            return -1; // Caso base: elemento no encontrado
-        }
-
-        int medio = inicio + (fin - inicio) / 2;
-        double precioMedio = listaProductos.get(medio).getPrecio();
-
-        if (precioMedio == precioBuscado) {
-            return medio; // Caso base: elemento encontrado
-        } else if (precioBuscado < precioMedio) {
-            return busquedaBinaria(precioBuscado, inicio, medio - 1); // Subconjunto izquierdo
-        } else {
-            return busquedaBinaria(precioBuscado, medio + 1, fin); // Subconjunto derecho
         }
     }
 

@@ -6,7 +6,7 @@
 ---
 
 ## 📋 Descripción del Proyecto
-Este proyecto implementa una solución en **Java** para la gestión de productos dentro de un almacén. Utiliza una lista enlazada (`LinkedList<Producto>`) para almacenar los elementos, aplica el ordenamiento mediante la interfaz estándar `Comparable<Producto>` (orden natural por precio) y realiza búsquedas eficientes mediante el algoritmo de **Búsqueda Binaria** implementado de forma recursiva.
+Este proyecto implementa una solución en **Java** para la administración de productos en un almacén. Hace uso de una estructura lineal dinámica (`LinkedList<Producto>`), aplica ordenamiento natural por precio mediante la interfaz `Comparable<Producto>`, y modulariza el algoritmo de **Búsqueda Binaria** en una clase independiente y recursiva (`BusquedaBinaria`).
 
 ---
 
@@ -32,6 +32,10 @@ classDiagram
         +toString() String
     }
 
+    class BusquedaBinaria {
+        +buscar(lista: LinkedList~Producto~, precioBuscado: double, inicio: int, fin: int)$ int
+    }
+
     class Almacen {
         -listaProductos: LinkedList~Producto~
         -objetoProducto: Producto
@@ -41,14 +45,14 @@ classDiagram
         +ordenarListaProductos() void
         +visualizarListaProductos() void
         +buscarProducto() void
-        +busquedaBinaria(precioBuscado: double, inicio: int, fin: int) int
         +visualizarMenu() void
         +main(args: String[]) void
     }
 
     Comparable~Producto~ <|.. Producto : implementa
-    Almacen --> Producto : -objetoProducto
-    Almacen o-- Producto : gestiona lista
+    Almacen o-- Producto : gestiona listaProductos
+    Almacen --> Producto : objetoProducto
+    Almacen ..> BusquedaBinaria : usa
 ```
 
 ---
@@ -83,7 +87,7 @@ classDiagram
 > **Respuesta:** La condición fundamental e indispensable es que la colección o lista de elementos **debe estar previamente ordenada** respecto al mismo criterio/clave que se va a buscar (en este caso, ordenada por `precio`). Si la lista no está ordenada, la búsqueda binaria arrojará resultados incorrectos.
 
 ### 3. ¿Qué parte del ordenamiento modificarías para que fuera en orden alfabético?
-> **Respuesta:** Se modificaría el método `compareTo(Producto otroProducto)` en la clase `Producto` (o se crearía un `Comparator` alternativo). En lugar de comparar por `this.precio`, se compararía el atributo de texto `nombre`:
+> **Respuesta:** Se modificaría el método `compareTo(Producto otroProducto)` en la clase `Producto`. En lugar de comparar por `this.precio`, se compararía el atributo de texto `nombre`:
 > ```java
 > @Override
 > public int compareTo(Producto otroProducto) {
@@ -92,4 +96,4 @@ classDiagram
 > ```
 
 ### 4. ¿Existe algún otro método recursivo dentro de tu programa? ¿Cuál?
-> **Respuesta:** Sí. El método recursivo implementado es **`busquedaBinaria(double precioBuscado, int inicio, int fin)`** dentro de la clase `Almacen`. Este método se llama a sí mismo sucesivamente dividiendo el espacio de búsqueda en mitades (`subconjunto izquierdo` o `subconjunto derecho`) hasta encontrar el elemento o alcanzar el caso base (`inicio > fin`).
+> **Respuesta:** Sí. El método recursivo implementado es **`buscar` de la clase `BusquedaBinaria`**. Este método se llama a sí mismo sucesivamente dividiendo el espacio de búsqueda en mitades (`subconjunto izquierdo` o `subconjunto derecho`) hasta encontrar el elemento o alcanzar el caso base (`inicio > fin`).
